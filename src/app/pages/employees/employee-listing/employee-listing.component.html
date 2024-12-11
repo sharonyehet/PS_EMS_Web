@@ -2,10 +2,12 @@
 
 <section class="overflow-auto">
   <mat-table class="w-full !min-w-[800px]" [dataSource]="dataSource">
-    <ng-container matColumnDef="id">
+    <ng-container matColumnDef="id" sticky>
       <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
       <mat-cell *matCellDef="let emp">
-        {{ emp.id || "-" }}
+        <a class="underline text-blue-500"[routerLink]="[emp.id]">
+          {{ emp.id || "-" }}
+        </a>
       </mat-cell>
     </ng-container>
 
@@ -30,13 +32,6 @@
       </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="phoneNumber">
-      <mat-header-cell *matHeaderCellDef>Phone No.</mat-header-cell>
-      <mat-cell *matCellDef="let emp">
-        {{ emp.phoneNumber || "-" }}
-      </mat-cell>
-    </ng-container>
-
     <ng-container matColumnDef="department">
       <mat-header-cell *matHeaderCellDef>Department</mat-header-cell>
       <mat-cell *matCellDef="let emp">
@@ -44,7 +39,7 @@
       </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="actions">
+    <ng-container matColumnDef="actions" stickyEnd>
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let emp" class="!justify-end">
         <div class="flex ml-auto items-center gap-x-[1.875rem]">
@@ -88,4 +83,13 @@
       [ngClass]="dataSource.data.length === 0 && !isLoading ? 'flex' : 'hidden'"
     />
   </mat-table>
+
+  <div class="py-3 px-5 text-sm text-gray-400" *ngIf="pagination.length">{{ pagination.length }} records</div>
+
+  <mat-paginator
+        [length]="pagination.length"
+        [pageSize]="pagination.pageSize"
+        [pageIndex]="pagination.pageIndex"
+        [pageSizeOptions]="pagination.pageSizeOptions"
+        (page)="onPaginationChange($event)" />
 </section>

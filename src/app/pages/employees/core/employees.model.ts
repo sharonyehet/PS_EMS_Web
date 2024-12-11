@@ -1,4 +1,4 @@
-import { Department } from "./employee.constant";
+import { Department, Gender } from "./employee.constant";
 
 export interface EmployeeListing {
   totalRecord: number;
@@ -11,6 +11,8 @@ export interface Employee {
   id: string;
   firstName: string;
   lastName: string;
+  email: string;
+  gender: Gender;
   dateOfBirth: Date;
   phoneNumber: string;
   department: Department;

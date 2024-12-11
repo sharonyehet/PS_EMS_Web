@@ -1,0 +1,11 @@
+.details-section {
+  @apply bg-white border border-gray-300 rounded-lg mt-4 p-5 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-x-[1.875rem] gap-y-10;
+
+  label {
+    @apply font-semibold;
+
+    & + div {
+      @apply text-gray-400;
+    }
+  }
+}

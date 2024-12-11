@@ -1,2 +1,67 @@
-<p>employee-details works!</p>
+<section *ngIf="isLoading" class="details-section">
+  <div
+    *ngFor="let _ of loadingPlaceholders"
+    class="p-4 bg-gray-300 animate-pulse"
+  ></div>
+</section>
+
+<ng-container *ngIf="!isLoading">
+  <div class="flex justify-between gap-x-3">
+    <a class="flex items-center gap-x-2" [routerLink]="['..']">
+      <mat-icon>arrow_back</mat-icon>
+      <span class="font-semibold">Back</span>
+    </a>
+    <div class="flex justify-end gap-x-3">
+      <button>
+        <mat-icon color="primary">edit</mat-icon>
+      </button>
+      <button>
+        <mat-icon color="warn">delete</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <section class="details-section">
+    <div class="col-span-full">
+      <label>Employee ID</label>
+      <div>{{ employeeDetails?.id || '-' }}</div>
+    </div>
+
+    <div>
+      <label>First Name</label>
+      <div>{{ employeeDetails?.firstName || '-' }}</div>
+    </div>
+
+    <div>
+      <label>Last Name</label>
+      <div>{{ employeeDetails?.lastName || '-' }}</div>
+    </div>
+
+    <div>
+      <label>Date of Birth</label>
+      <div>{{ (employeeDetails?.dateOfBirth | date: DATE_UI) || '-' }}</div>
+    </div>
+
+    <div>
+      <label>Gender</label>
+      <div>{{ employeeDetails ? Gender[employeeDetails.gender] : '-' }}</div>
+    </div>
+
+    <div>
+      <label>Email</label>
+      <div>{{ employeeDetails?.email || '-' }}</div>
+    </div>
+
+    <div>
+      <label>Phone Number</label>
+      <div>{{ employeeDetails?.phoneNumber || '-' }}</div>
+    </div>
+
+    <div>
+      <label>Department</label>
+      <div>{{ employeeDetails ? Department[employeeDetails.department] : '-' }}</div>
+    </div>
+  </section>
+</ng-container>
+
 <router-outlet></router-outlet>

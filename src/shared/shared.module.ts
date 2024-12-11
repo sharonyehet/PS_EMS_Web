@@ -6,6 +6,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [NavbarComponent, FooterComponent],
@@ -18,6 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatTableModule,
     MatProgressBarModule,
     MatIconModule,
+    MatPaginatorModule,
   ],
 })
 export class SharedModule {}

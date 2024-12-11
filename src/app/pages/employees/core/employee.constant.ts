@@ -5,3 +5,8 @@ export enum Department {
   Marketing = 4,
   Sales = 5,
 }
+
+export enum Gender {
+  Male = 1,
+  Female = 2,
+}

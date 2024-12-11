@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { finalize } from 'rxjs';
-import { Department } from '../core/employee.constant';
+import { Department, Gender } from '../core/employee.constant';
 import { Employee } from '../core/employees.model';
 import { EmployeeService } from '../core/employees.service';
+import { DATE_UI } from '../../../core/constants/app.constants';
+import { UiPaginationModel } from '../../../core/models/app.model';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-employee-listing',
@@ -11,8 +14,10 @@ import { EmployeeService } from '../core/employees.service';
   styleUrl: './employee-listing.component.css',
 })
 export class EmployeeListingComponent {
+  DATE_UI = DATE_UI;
+
   Department = Department;
-  DATE_UI = 'dd/MM/yyyy';
+  Gender = Gender;
 
   isLoading = false;
   displayedColumns = [
@@ -20,15 +25,13 @@ export class EmployeeListingComponent {
     'firstName',
     'lastName',
     'email',
-    'phoneNumber',
     'department',
     'actions',
   ];
   dataSource = new MatTableDataSource<Employee>();
+  pagination = new UiPaginationModel();
 
-  constructor(
-    private employeeService: EmployeeService,
-  ) {}
+  constructor(private employeeService: EmployeeService) {}
 
   ngOnInit(): void {
     this.getEmployeeListing();
@@ -36,6 +39,13 @@ export class EmployeeListingComponent {
 
   onDeleteEmpClick(id: string): void {
     // TODO: Promp dlt confirmation and perform dlt
+  }
+
+  onPaginationChange(event: PageEvent): void {
+    this.pagination.pageIndex = event.pageIndex;
+    this.pagination.pageSize = event.pageSize;
+
+    this.getEmployeeListing();
   }
 
   private getEmployeeListing(): void {
@@ -50,7 +60,7 @@ export class EmployeeListingComponent {
       .subscribe({
         next: (res) => {
           this.dataSource.data = res.data;
-          console.log(this.dataSource);
+          this.pagination.length = res.totalRecord;
         },
         error: (err) => {
           // TODO: Error pop up

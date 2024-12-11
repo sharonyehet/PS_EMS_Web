@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { EmployeeListing } from './employees.model';
+import { Employee, EmployeeListing } from './employees.model';
 import { Observable, of } from 'rxjs';
-import { Department } from './employee.constant';
+import { Department, Gender } from './employee.constant';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EmployeeService {
   private fullPath = `${environment.apiServer}/employee/${environment.apiVersion}`;
@@ -28,7 +28,9 @@ export class EmployeeService {
           id: '001',
           firstName: 'Jackie',
           lastName: 'Chong',
+          email: 'jackie.chong@mail.com',
           dateOfBirth: new Date(),
+          gender: Gender.Male,
           phoneNumber: '0123456789',
           department: Department.HR,
         },
@@ -36,7 +38,9 @@ export class EmployeeService {
           id: '002',
           firstName: 'John',
           lastName: 'Doe',
+          email: 'john.doe@mail.com',
           dateOfBirth: new Date(),
+          gender: Gender.Male,
           phoneNumber: '0133456789',
           department: Department.IT,
         },
@@ -44,7 +48,9 @@ export class EmployeeService {
           id: '003',
           firstName: 'Abby',
           lastName: 'Yong',
+          email: 'abby.yong@mail.com',
           dateOfBirth: new Date(),
+          gender: Gender.Female,
           phoneNumber: '0143456789',
           department: Department.Marketing,
         },
@@ -52,7 +58,9 @@ export class EmployeeService {
           id: '004',
           firstName: 'Bettie',
           lastName: 'Kim',
+          email: 'bettie.kim@mail.com',
           dateOfBirth: new Date(),
+          gender: Gender.Female,
           phoneNumber: '0153456789',
           department: Department.Finance,
         },
@@ -60,7 +68,9 @@ export class EmployeeService {
           id: '005',
           firstName: 'Chris',
           lastName: 'Lim',
+          email: 'chris.lim@mail.com',
           dateOfBirth: new Date(),
+          gender: Gender.Male,
           phoneNumber: '0163456789',
           department: Department.Sales,
         },
@@ -69,5 +79,21 @@ export class EmployeeService {
     return of(mockListing);
 
     return this.http.post<EmployeeListing>(`${this.fullPath}/list`, body);
+  }
+
+  getEmployeeDetails(id: string): Observable<Employee> {
+    const mockRes = {
+      id: '001',
+      firstName: 'Jackie',
+      lastName: 'Chong',
+      email: 'jackie.chong@mail.com',
+      dateOfBirth: new Date(),
+      phoneNumber: '0123456789',
+      gender: Gender.Male,
+      department: Department.HR,
+    };
+    return of(mockRes);
+
+    return this.http.get<Employee>(`${this.fullPath}/${id}`);
   }
 }
