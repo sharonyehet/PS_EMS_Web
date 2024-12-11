@@ -1,0 +1,91 @@
+<h1 class="text-xl font-bold">Employee List</h1>
+
+<section class="overflow-auto">
+  <mat-table class="w-full !min-w-[800px]" [dataSource]="dataSource">
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
+      <mat-cell *matCellDef="let emp">
+        {{ emp.id || "-" }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="firstName">
+      <mat-header-cell *matHeaderCellDef>First Name</mat-header-cell>
+      <mat-cell *matCellDef="let emp">
+        {{ emp.firstName || "-" }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="lastName">
+      <mat-header-cell *matHeaderCellDef>Last Name</mat-header-cell>
+      <mat-cell *matCellDef="let emp">
+        {{ emp.lastName || "-" }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+      <mat-cell *matCellDef="let emp">
+        {{ emp.email || "-" }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="phoneNumber">
+      <mat-header-cell *matHeaderCellDef>Phone No.</mat-header-cell>
+      <mat-cell *matCellDef="let emp">
+        {{ emp.phoneNumber || "-" }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="department">
+      <mat-header-cell *matHeaderCellDef>Department</mat-header-cell>
+      <mat-cell *matCellDef="let emp">
+        {{ Department[emp.department] || "-" }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let emp" class="!justify-end">
+        <div class="flex ml-auto items-center gap-x-[1.875rem]">
+          <a [routerLink]="[emp.id, 'edit']">
+            <mat-icon color="primary">edit</mat-icon>
+          </a>
+          <button (click)="onDeleteEmpClick(emp.id)">
+            <mat-icon color="warn">delete</mat-icon>
+          </button>
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns" />
+    <mat-row *matRowDef="let row; columns: displayedColumns" />
+
+    <ng-container matColumnDef="loading">
+      <mat-footer-cell
+        *matFooterCellDef
+        [attr.colspan]="displayedColumns.length"
+      >
+        <mat-progress-bar mode="indeterminate" />
+      </mat-footer-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="noData">
+      <mat-footer-cell
+        *matFooterCellDef
+        [attr.colspan]="displayedColumns.length"
+      >
+        No records found
+      </mat-footer-cell>
+    </ng-container>
+
+    <mat-footer-row
+      *matFooterRowDef="['loading']"
+      [ngClass]="isLoading ? 'flex' : 'hidden'"
+    />
+    <mat-footer-row
+      *matFooterRowDef="['noData']"
+      [ngClass]="dataSource.data.length === 0 && !isLoading ? 'flex' : 'hidden'"
+    />
+  </mat-table>
+</section>

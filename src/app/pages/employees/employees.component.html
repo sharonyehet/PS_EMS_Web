@@ -1,0 +1,3 @@
+<app-employee-listing *ngIf="!isDetailVisible"></app-employee-listing>
+
+<router-outlet (activate)="onOutletLoaded()" (deactivate)="isDetailVisible = false" ></router-outlet>
