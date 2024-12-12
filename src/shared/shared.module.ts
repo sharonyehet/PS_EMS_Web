@@ -16,7 +16,7 @@ import { EnumToArrayPipe } from './pipes/enumToArray.pipe';
 
 @NgModule({
   declarations: [NavbarComponent, FooterComponent, EnumToArrayPipe],
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterModule],
   exports: [
     NavbarComponent,
     FooterComponent,
