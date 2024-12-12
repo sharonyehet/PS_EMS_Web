@@ -1,0 +1,66 @@
+.field-label {
+  @apply font-semibold;
+}
+
+.field-value-static {
+  @apply text-gray-400;
+}
+
+.required:after {
+  @apply text-red-600 font-bold content-['_*'] text-base;
+}
+
+.form-control {
+  &::placeholder {
+      @apply text-sm font-normal;
+  }
+
+  &.disabled {
+      @apply bg-[#cfcfcf4d] text-[#2e2e2e9f];
+  }
+
+  @apply border-gray-300 border rounded-[0.25rem] w-full px-4 py-2 font-bold text-gray-700 sm:text-base text-[0.8rem] disabled:bg-[#cfcfcf4d] disabled:text-[#2e2e2e9f];
+}
+
+.field-invalid-text {
+  @apply text-xs text-[red] pt-1 hidden;
+}
+
+.show-form-error {
+  input,
+  .mat-select,
+  .mat-form-field,
+  textarea {
+      &.ng-invalid {
+          @apply border;
+          border-color: red !important;
+
+          &.other-input {
+              @apply border-0 border-b;
+          }
+      }
+  }
+
+  .form-control,
+  .select-field {
+      &.invalid {
+          @apply border border-[red];
+      }
+  }
+
+  .field-invalid-text {
+      @apply block;
+  }
+
+  mat-radio-group {
+      &.ng-invalid {
+          .mat-mdc-radio-button
+              .mdc-radio
+              .mdc-radio__native-control:enabled:not(:checked)
+              + .mdc-radio__background
+              .mdc-radio__outer-circle {
+              @apply border border-[red];
+          }
+      }
+  }
+}

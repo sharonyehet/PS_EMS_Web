@@ -1,1 +1,186 @@
-<p>add-edit-employee works!</p>
+<!-- Loading Skeleton -->
+<section
+  *ngIf="isLoading"
+  class="bg-white border border-gray-300 rounded-lg mt-4 p-5 md:p-8"
+>
+  <div
+    *ngFor="let _ of loadingPlaceholders"
+    class="p-4 bg-gray-300 animate-pulse"
+  ></div>
+</section>
+
+<!-- Create & Edit Form -->
+<form
+  *ngIf="!id || !isLoading"
+  [class.show-form-error]="showFormError"
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+  class="bg-white border border-gray-300 rounded-lg mt-4 p-5 md:p-8"
+>
+  <section class="grid grid-cols-1 md:grid-cols-2 gap-x-[1.875rem] gap-y-10">
+    <div *ngIf="id" class="col-span-full">
+      <label class="field-label required"> Employee ID </label>
+      <div class="field-value-static">{{ form.controls.id.value || '-' }}</div>
+    </div>
+
+    <div>
+      <label class="field-label required"> First Name </label>
+      <input class="form-control" maxlength="30" formControlName="firstName" />
+      <div
+        *ngIf="form.controls.firstName.hasError('required')"
+        class="field-invalid-text"
+      >
+        Field is required
+      </div>
+    </div>
+
+    <div>
+      <label class="field-label required"> Last Name </label>
+      <input class="form-control" maxlength="30" formControlName="lastName" />
+      <div
+        *ngIf="form.controls.lastName.hasError('required')"
+        class="field-invalid-text"
+      >
+        Field is required
+      </div>
+    </div>
+
+    <div>
+      <label class="field-label required"> Date of Birth </label>
+      <div class="relative flex items-center">
+        <input
+          class="cursor-pointer form-control"
+          formControlName="dateOfBirth"
+          matInput
+          readonly
+          [max]="MIN_DOB"
+          [matDatepicker]="picker"
+          (click)="picker.open()"
+        />
+        <mat-datepicker-toggle
+          class="absolute flex items-center justify-center w-6 h-6 rounded-full right-2.5 datepicker-icon"
+          [disableRipple]="true"
+          [for]="picker"
+        />
+        <mat-datepicker #picker />
+      </div>
+      <div
+        *ngIf="form.controls.dateOfBirth.hasError('required')"
+        class="field-invalid-text"
+      >
+        Field is required
+      </div>
+    </div>
+
+    <div>
+      <label class="field-label required"> Gender </label>
+      <div>
+        <mat-radio-group
+          color="primary"
+          aria-label="Select an option"
+          formControlName="gender"
+        >
+          <mat-radio-button
+            *ngFor="let option of Gender | enumToArray"
+            class="relative -left-[0.625rem]"
+            [value]="option.id"
+          >
+            <span class="font-bold mr-10">{{ option.value.toString() }}</span>
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <div
+        *ngIf="form.controls.gender.hasError('required')"
+        class="field-invalid-text"
+      >
+        Field is required
+      </div>
+    </div>
+
+    <div>
+      <label class="field-label required"> Email </label>
+      <input class="form-control" maxlength="50" formControlName="email" />
+      <div
+        *ngIf="form.controls.email.hasError('required')"
+        class="field-invalid-text"
+      >
+        Field is required
+      </div>
+      <div
+        *ngIf="form.controls.email.hasError('email')"
+        class="field-invalid-text"
+      >
+        Email is invalid
+      </div>
+    </div>
+
+    <div>
+      <label class="field-label"> Phone Number</label>
+      <input
+        class="form-control"
+        maxlength="12"
+        type="text"
+        digitOnly
+        formControlName="phoneNumber"
+      />
+    </div>
+
+    <div>
+      <label class="field-label required">Department</label>
+      <div class="form-control">
+        <mat-select
+          hideSingleSelectionIndicator
+          #dptOption="matSelect"
+          formControlName="department"
+        >
+          <mat-option
+            *ngFor="let option of Department | enumToArray : true"
+            [value]="option.id"
+            >{{ option.value.toString() }}</mat-option
+          >
+        </mat-select>
+      </div>
+      <div
+        *ngIf="form.controls.department.hasError('required')"
+        class="field-invalid-text"
+      >
+        Field is required
+      </div>
+    </div>
+  </section>
+
+  <section class="flex items-center justify-center gap-x-8 mt-20">
+    <button
+      type="button"
+      routerLink=".."
+      class="btn-cancel"
+      mat-button
+      [disabled]="isFormSubmitting"
+    >
+      Cancel
+    </button>
+
+    <button
+      type="submit"
+      class="btn-confirm"
+      mat-button
+      [disabled]="isFormSubmitting"
+    >
+      Save
+    </button>
+  </section>
+</form>
+
+<!-- Error handling -->
+<section
+  *ngIf="id && !isLoading && !employeeDetails"
+  class="flex justify-center flex-col gap-y-20 my-20"
+>
+  <div class="text-xl font-bold text-center">Something went wrong.</div>
+  <a
+    routerLink="/"
+    class="rounded-full bg-blue-950 text-white text-center px-5 py-3 mx-auto"
+    >Back to Home</a
+  >
+</section>

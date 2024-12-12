@@ -8,9 +8,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 export class EmployeesComponent {
   isDetailVisible = false;
 
-  constructor(
-    private cdr: ChangeDetectorRef
-  ) {}
+  constructor(private cdr: ChangeDetectorRef) {}
 
   onOutletLoaded(): void {
     this.isDetailVisible = true;

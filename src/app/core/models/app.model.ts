@@ -6,3 +6,7 @@ export class UiPaginationModel extends PageEvent {
   override pageSize = 10; // The current page size.
   pageSizeOptions: number[] = [10, 25, 50, 100];
 }
+
+export interface EnumData {
+  [key: number | string]: string | number;
+}

@@ -1,0 +1,39 @@
+.btn-cancel {
+  &.mat-mdc-button:not(:disabled) {
+    @apply text-blue-900;
+  }
+
+  &.mat-mdc-button {
+    @apply border border-solid rounded-full border-blue-950 shadow-[0_3px_6px_#00000029] px-6;
+
+    &:has(.material-icons, mat-icon, [matButtonIcon]) {
+      @apply px-6;
+    }
+  }
+}
+
+.btn-confirm {
+  &.mat-mdc-button:not(:disabled) {
+      color: white;
+  }
+
+  &.mat-mdc-button {
+      @apply rounded-full bg-blue-950 shadow-[0_3px_6px_#00000029] px-6 transition-colors;
+
+      &:disabled {
+          @apply bg-gray-400 text-white;
+      }
+
+      &:has(.material-icons, mat-icon, [matButtonIcon]) {
+          @apply px-6;
+      }
+  }
+}
+
+.datepicker-icon {
+  scale: 0.8;
+
+  .mat-mdc-button-persistent-ripple {
+      display: none;
+  }
+}

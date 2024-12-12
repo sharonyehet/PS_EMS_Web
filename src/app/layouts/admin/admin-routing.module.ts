@@ -7,34 +7,34 @@ import { AddEditEmployeeComponent } from '../../pages/employees/add-edit-employe
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'employees' },
   {
-      path: 'employees',
-      children: [
+    path: 'employees',
+    children: [
+      {
+        path: '',
+        component: EmployeesComponent,
+        children: [
           {
-              path: '',
-              component: EmployeesComponent,
-              children: [
-                  {
-                      path: ':id',
-                      component: EmployeeDetailsComponent,
-                      children: [
-                          {
-                              path: 'edit',
-                              component: AddEditEmployeeComponent,
-                          },
-                      ],
-                  },
-                  {
-                    path: 'add',
-                    component: AddEditEmployeeComponent,
-                },
-              ],
+            path: 'add',
+            component: AddEditEmployeeComponent,
           },
-      ],
+          {
+            path: ':id',
+            component: EmployeeDetailsComponent,
+            children: [
+              {
+                path: 'edit',
+                component: AddEditEmployeeComponent,
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AdminRoutingModule { }
+export class AdminRoutingModule {}

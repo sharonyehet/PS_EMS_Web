@@ -38,7 +38,17 @@ export class EmployeeListingComponent {
   }
 
   onDeleteEmpClick(id: string): void {
-    // TODO: Promp dlt confirmation and perform dlt
+    if (confirm('Confirm delete this employee?')) {
+      this.employeeService.deleteEmployee(id).subscribe({
+        next: () => {
+          alert('Successfully deleted employee.');
+          this.getEmployeeListing();
+        },
+        error: (err) => {
+          alert(err || 'Error occured. Please try again.');
+        },
+      });
+    }
   }
 
   onPaginationChange(event: PageEvent): void {
@@ -63,8 +73,7 @@ export class EmployeeListingComponent {
           this.pagination.length = res.totalRecord;
         },
         error: (err) => {
-          // TODO: Error pop up
-          console.error(err);
+          alert(err || 'Error occured. Please try again.');
         },
       });
   }

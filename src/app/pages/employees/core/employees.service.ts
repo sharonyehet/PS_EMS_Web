@@ -87,7 +87,7 @@ export class EmployeeService {
       firstName: 'Jackie',
       lastName: 'Chong',
       email: 'jackie.chong@mail.com',
-      dateOfBirth: new Date(),
+      dateOfBirth: new Date('01/01/2000'),
       phoneNumber: '0123456789',
       gender: Gender.Male,
       department: Department.HR,
@@ -95,5 +95,23 @@ export class EmployeeService {
     return of(mockRes);
 
     return this.http.get<Employee>(`${this.fullPath}/${id}`);
+  }
+
+  addEmployee(details: Employee): Observable<boolean> {
+    return of(true);
+
+    return this.http.post<boolean>(`${this.fullPath}/add`, details);
+  }
+
+  updateEmployee(details: Employee): Observable<boolean> {
+    return of(true);
+
+    return this.http.put<boolean>(`${this.fullPath}/${details.id}`, details);
+  }
+
+  deleteEmployee(id: string): Observable<boolean> {
+    return of(true);
+
+    return this.http.delete<boolean>(`${this.fullPath}/${id}`);
   }
 }
