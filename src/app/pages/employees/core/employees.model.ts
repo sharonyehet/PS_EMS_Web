@@ -1,14 +1,13 @@
-import { Department, Gender } from "./employee.constant";
+import { Department, Gender } from './employee.constant';
 
 export interface EmployeeListing {
   totalRecord: number;
   pageNo: number;
   pageSize: number;
-  data: Employee [];
+  data: Employee[];
 }
 
-export interface Employee {
-  id: string;
+export interface PostEmployee {
   firstName: string;
   lastName: string;
   email: string;
@@ -16,4 +15,8 @@ export interface Employee {
   dateOfBirth: Date;
   phoneNumber: string;
   department: Department;
+}
+
+export interface Employee extends PostEmployee {
+  id: string;
 }

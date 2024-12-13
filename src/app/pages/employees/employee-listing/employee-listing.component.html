@@ -5,7 +5,7 @@
     <ng-container matColumnDef="id" sticky>
       <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
       <mat-cell *matCellDef="let emp">
-        <a class="underline text-blue-500"[routerLink]="[emp.id]">
+        <a class="underline text-blue-500" [routerLink]="[emp.id]">
           {{ emp.id || "-" }}
         </a>
       </mat-cell>
@@ -27,8 +27,8 @@
 
     <ng-container matColumnDef="email">
       <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
-      <mat-cell *matCellDef="let emp">
-        {{ emp.email || "-" }}
+      <mat-cell *matCellDef="let emp" class="flex items-center">
+        <span class="line-clamp-2">{{ emp.email || "-" }}</span>
       </mat-cell>
     </ng-container>
 
@@ -84,12 +84,15 @@
     />
   </mat-table>
 
-  <div class="py-3 px-5 text-sm text-gray-400" *ngIf="pagination.length">{{ pagination.length }} records</div>
+  <div class="py-3 px-5 text-sm text-gray-400" *ngIf="pagination.length">
+    {{ pagination.length }} records
+  </div>
 
   <mat-paginator
-        [length]="pagination.length"
-        [pageSize]="pagination.pageSize"
-        [pageIndex]="pagination.pageIndex"
-        [pageSizeOptions]="pagination.pageSizeOptions"
-        (page)="onPaginationChange($event)" />
+    [length]="pagination.length"
+    [pageSize]="pagination.pageSize"
+    [pageIndex]="pagination.pageIndex"
+    [pageSizeOptions]="pagination.pageSizeOptions"
+    (page)="onPaginationChange($event)"
+  />
 </section>

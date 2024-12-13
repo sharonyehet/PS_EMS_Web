@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { EmployeesComponent } from '../../pages/employees/employees.component';
-import { EmployeeDetailsComponent } from '../../pages/employees/employee-details/employee-details.component';
 import { AddEditEmployeeComponent } from '../../pages/employees/add-edit-employee/add-edit-employee.component';
+import { EmployeeDetailsComponent } from '../../pages/employees/employee-details/employee-details.component';
+import { EmployeesComponent } from '../../pages/employees/employees.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'employees' },

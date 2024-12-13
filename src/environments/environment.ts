@@ -1,4 +1,4 @@
 export const environment = {
-  apiServer: 'https://localhost:4334',
-  apiVersion: 'api/v1',
+  apiServer: 'http://localhost:5165',
+  apiVersion: 'api',
 };

@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { EmployeeService } from '../core/employees.service';
-import { Employee } from '../core/employees.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, finalize, Subject } from 'rxjs';
-import { Department, Gender } from '../core/employee.constant';
-import { DATE_UI } from '../../../core/constants/app.constants';
+import { BehaviorSubject, finalize } from 'rxjs';
+import {
+  DATE_UI,
+  UNEXPECTED_ERROR,
+} from '../../../core/constants/app.constants';
+import { ErrorModel } from '../../../core/models/response.model';
 import { AddEditEmployeeComponent } from '../add-edit-employee/add-edit-employee.component';
+import { Department, Gender } from '../core/employee.constant';
+import { Employee } from '../core/employees.model';
+import { EmployeeService } from '../core/employees.service';
 
 @Component({
   selector: 'app-employee-details',
@@ -29,7 +33,7 @@ export class EmployeeDetailsComponent implements OnInit {
   constructor(
     private employeeService: EmployeeService,
     private route: ActivatedRoute,
-    private router: Router,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -51,16 +55,15 @@ export class EmployeeDetailsComponent implements OnInit {
           alert('Successfully deleted employee.');
           this.router.navigate(['/']);
         },
-        error: (err) => {
-          alert(err || 'Error occured. Please try again.')
-        }
+        error: (err: ErrorModel) => {
+          alert(err.error.message || UNEXPECTED_ERROR);
+        },
       });
     }
   }
 
   onOutletLoaded(component: AddEditEmployeeComponent): void {
     this.isDetailVisible = false;
-    component.isLoading = this.isLoading;
     component.parentRefreshDetailsSubject = this.refreshDetailsSubject;
     component.id = this.id;
   }
@@ -79,8 +82,9 @@ export class EmployeeDetailsComponent implements OnInit {
           this.employeeDetails = res;
           this.refreshDetailsSubject.next(this.employeeDetails);
         },
-        error: (err) => {
-          alert(err || 'Error occured. Please try again.')
+        error: (err: ErrorModel) => {
+          alert(err.error.message || UNEXPECTED_ERROR);
+          this.router.navigate(['..']);
         },
       });
   }

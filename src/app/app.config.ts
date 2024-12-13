@@ -1,11 +1,12 @@
 import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
-import { routes } from './app.routes';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideHttpClient } from '@angular/common/http';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { EnumToArrayPipe } from '../shared/pipes/enumToArray.pipe';
+import { routes } from './app.routes';
+import { HttpResponseInterceptor } from './core/http-interceptors/http-response.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,5 +15,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     provideMomentDateAdapter(),
     EnumToArrayPipe,
+    HttpResponseInterceptor,
   ],
 };

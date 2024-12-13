@@ -1,7 +1,7 @@
 <!-- Loading Skeleton -->
 <section
   *ngIf="isLoading"
-  class="bg-white border border-gray-300 rounded-lg mt-4 p-5 md:p-8"
+  class="bg-white border border-gray-300 rounded-lg mt-4 p-5 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-x-[1.875rem] gap-y-10"
 >
   <div
     *ngFor="let _ of loadingPlaceholders"
@@ -20,7 +20,7 @@
   <section class="grid grid-cols-1 md:grid-cols-2 gap-x-[1.875rem] gap-y-10">
     <div *ngIf="id" class="col-span-full">
       <label class="field-label required"> Employee ID </label>
-      <div class="field-value-static">{{ form.controls.id.value || '-' }}</div>
+      <div class="field-value-static">{{ form.controls.id.value || "-" }}</div>
     </div>
 
     <div>

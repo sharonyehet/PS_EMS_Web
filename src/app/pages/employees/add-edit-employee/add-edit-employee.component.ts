@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { EmployeeService } from '../core/employees.service';
-import { Employee } from '../core/employees.model';
-import { BehaviorSubject, filter, finalize, Observable, Subject } from 'rxjs';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
-import { Department, Gender } from '../core/employee.constant';
-import { DoB_MIN_YR } from '../../../core/constants/app.constants';
-import moment from 'moment';
 import { Router } from '@angular/router';
+import moment from 'moment';
+import { BehaviorSubject, finalize, Observable } from 'rxjs';
+import {
+  DoB_MIN_YR,
+  UNEXPECTED_ERROR,
+} from '../../../core/constants/app.constants';
+import { ErrorModel } from '../../../core/models/response.model';
+import { Department, Gender } from '../core/employee.constant';
+import { Employee, PostEmployee } from '../core/employees.model';
+import { EmployeeService } from '../core/employees.service';
 
 @Component({
   selector: 'app-add-edit-employee',
@@ -41,7 +45,7 @@ export class AddEditEmployeeComponent implements OnInit {
   constructor(
     private employeeService: EmployeeService,
     private fb: NonNullableFormBuilder,
-    private router: Router,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -60,46 +64,57 @@ export class AddEditEmployeeComponent implements OnInit {
 
     this.isFormSubmitting = true;
 
-    const obs = this.id ? this.updateDetails$() : this.addEmployee$();
+    const obs: Observable<boolean | Employee> = this.id
+      ? this.updateDetails$()
+      : this.addEmployee$();
 
-    obs.pipe(finalize(() => {
-      this.isFormSubmitting = false;
-    })).subscribe({
-      next: () => {
-        const message = this.id ? 'Successfully updated employee details' : 'Successfully added new employee';
-        alert(message);
-        this.router.navigate(['/']);
-      },
-      error: (err) => {
-        alert(err || 'Error occured. Please try again.');
-      }
-    })
+    obs
+      .pipe(
+        finalize(() => {
+          this.isFormSubmitting = false;
+        })
+      )
+      .subscribe({
+        next: () => {
+          const message = this.id
+            ? 'Successfully updated employee details'
+            : 'Successfully added new employee';
+          alert(message);
+          this.router.navigate(['/']);
+        },
+        error: (err: ErrorModel) => {
+          alert(err.error.message || UNEXPECTED_ERROR);
+        },
+      });
   }
 
   private patchForm(): void {
+    this.isLoading = true;
     this.parentRefreshDetailsSubject.subscribe((details) => {
       if (details) {
         this.employeeDetails = details;
         this.form.patchValue(details);
         this.form.controls.id.addValidators(Validators.required);
         this.form.controls.id.updateValueAndValidity();
+        this.isLoading = false;
       }
     });
   }
 
   private updateDetails$(): Observable<boolean> {
-    return this.employeeService
-      .updateEmployee(this.constructApiBody());
-  }
-
-  private addEmployee$(): Observable<boolean> {
-    return this.employeeService
-      .addEmployee(this.constructApiBody());
-  }
-
-  private constructApiBody(): Employee {
     const body: Employee = {
       id: this.form.controls.id.value,
+      ...this.constructApiBody(),
+    };
+    return this.employeeService.updateEmployee(body);
+  }
+
+  private addEmployee$(): Observable<Employee> {
+    return this.employeeService.addEmployee(this.constructApiBody());
+  }
+
+  private constructApiBody(): PostEmployee {
+    const body: PostEmployee = {
       firstName: this.form.controls.firstName.value,
       lastName: this.form.controls.lastName.value,
       email: this.form.controls.email.value,

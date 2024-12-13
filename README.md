@@ -1,4 +1,4 @@
-# PSEMSWeb
+# PolicyStreet Employee Management System Web
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.11.
 
@@ -6,22 +6,41 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Code scaffolding
+## Project Introduction
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+This project is for PolicyStreet Fullstack Developer assignment, developed by Sharon. There are pages including Employee Listing, Employee Details, and Create & Edit Employee Details with mobile responsive supported. Kindly refer to below for more details.
 
-## Build
+### Employee Listing
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+This page includes a table which displays a list of employees with pagination supported.
+http://localhost:4200/admin/employees
 
-## Running unit tests
+This page provides entry for features including:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- Add new employee
+- View details of an employee
+- Edit details of existing employee
+- Delete an employee
 
-## Running end-to-end tests
+### Employee Details
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+This page displays the details of an employee and provide entry for features including edit details & delete employee.
 
-## Further help
+http://localhost:4200/admin/employees/1
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### Create & Update Employee Details
+
+This page displays a form for admin to add new employee or edit details of existing employee.
+
+- Add
+  http://localhost:4200/admin/employees/add
+
+- Edit
+  http://localhost:4200/admin/employees/1/edit
+
+Field validations are implemented here, including:
+
+- Mandatory fields: First Name, Last Name, Email, Gender, Department, Date of Birth
+- Email: pattern validation
+- Phone number: input type must be digit only with a maximum length of 12
+- Date of birth: employee must be 18yo & above

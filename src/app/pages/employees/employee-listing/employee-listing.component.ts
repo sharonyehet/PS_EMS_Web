@@ -1,12 +1,16 @@
 import { Component } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { finalize } from 'rxjs';
+import {
+  DATE_UI,
+  UNEXPECTED_ERROR,
+} from '../../../core/constants/app.constants';
+import { UiPaginationModel } from '../../../core/models/app.model';
+import { ErrorModel } from '../../../core/models/response.model';
 import { Department, Gender } from '../core/employee.constant';
 import { Employee } from '../core/employees.model';
 import { EmployeeService } from '../core/employees.service';
-import { DATE_UI } from '../../../core/constants/app.constants';
-import { UiPaginationModel } from '../../../core/models/app.model';
-import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-employee-listing',
@@ -44,8 +48,8 @@ export class EmployeeListingComponent {
           alert('Successfully deleted employee.');
           this.getEmployeeListing();
         },
-        error: (err) => {
-          alert(err || 'Error occured. Please try again.');
+        error: (err: ErrorModel) => {
+          alert(err.error.message || UNEXPECTED_ERROR);
         },
       });
     }
@@ -61,7 +65,7 @@ export class EmployeeListingComponent {
   private getEmployeeListing(): void {
     this.isLoading = true;
     this.employeeService
-      .getEmployeeList()
+      .getEmployeeList(this.pagination.pageIndex + 1, this.pagination.pageSize)
       .pipe(
         finalize(() => {
           this.isLoading = false;
@@ -72,8 +76,8 @@ export class EmployeeListingComponent {
           this.dataSource.data = res.data;
           this.pagination.length = res.totalRecord;
         },
-        error: (err) => {
-          alert(err || 'Error occured. Please try again.');
+        error: (err: ErrorModel) => {
+          alert(err.error.message || UNEXPECTED_ERROR);
         },
       });
   }
