@@ -8,7 +8,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 
 ## Project Introduction
 
-This project is for PolicyStreet Fullstack Developer assignment, developed by Sharon. There are pages including Employee Listing, Employee Details, and Create & Edit Employee Details with mobile responsive supported. Kindly refer to below for more details.
+This project includes pages such as Employee Listing, Employee Details, and Create & Edit Employee Details with mobile responsive supported. Kindly refer to below for more details.
 
 ### Employee Listing
 
